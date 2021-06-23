@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="http-equiv" content="Content-type: text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anketa</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <!-- Button to Open the Modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open modal
+  </button>
+            
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      
+          
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" id="TitleAnketa" >Анкета</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+         <div class="camera-content">
+           
+           <!--------------- Image ------------------------------>
+            <div class="image-content">
+                <img id="profile-pic" src="" alt="">
+              <div class="camera">
+                <video src="" id="video"></video>
+                <canvas id="canvas"></canvas>
+            </div>  
+            </div>
+            
+            <div class="row">
+                 <div class="col-6">
+                     <button type="button" class="btn btn-secondary" id="TakePhoto" >Снять на Камеру</button>
+                     <input class="file-upload-" type="file" accept="image/*"/>
+                 </div>
+                 <div class="col-6">
+                     <a  href="#" class="btn btn-secondary" id="Put_Photo" >Поставить фото</a>
+                     <input class="file-upload" id="putphoto" type="file" accept="image/*"/>
+                 </div>
+             </div>
+             
+         <!-----------------------End-------------------------->    
+             <div class="row">
+                 <div class="col-4"></div>
+             <!--      -----------------  TextInput--  ---------------------------   --> 
+             <div class="col-4">
+             <input type="text" id="name" name="name" required
+                       minlength="4" maxlength="8" size="10">TextKorinbeuzhatir
+                       
+             </div>
+                <div class="col-4"></div>
+                 </div>
+             <!--      -----------------  Dropdown  ---------------------------   -->
+         <div class="row">
+            <div class="col-4"></div>
+             <div class="col-4">
+                 <select name="" id="dropdown-input">
+                     <option value="">1</option>
+                     <option value="">2</option>
+                 </select>
+             </div>
+            <div class="col-4"></div>
+         </div>
+             
+             <!--      -----------------  Textarea  ---------------------------  --- --> 
+             
+             <div class="col-4">
+             <textarea rows="4" cols="58" id="textarea-input">
+            
+             </textarea></div>
+             </div>
+             
+             <!--      -----------------  Checkbox---  ---------------------------   --> 
+          <div class="row"> 
+            <div class="col-4"></div>
+             <div class="col-4">
+                <label class="container">One
+                    <input type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+             </div>
+             <div class="col-4"></div>
+            </div>
+            
+             <!--      -----------------  SwitchBox    ---------------------------   -->
+            <div class="row">
+               <div class="col-4"></div>  
+                <div class="col-4">
+                     <label class="switch">
+                      <input type="checkbox" checked>
+                      <span class="slider round"></span>
+                    </label>
+                </div>
+               <div class="col-4"></div>
+            </div>
+              <!--      -----------------  RadioButton    -----------------------   -->  
+          <div class="row"> 
+           <div class="col-4"></div>   
+            <div class="Pole">
+                <label class="radio">
+                  <input type="radio" />
+                  <div class="radio__text">RadioButton</div>
+                </label>
+            </div>
+            <div class="col-4"></div>
+          </div>
+                
+               
+            <!--      -----------------  Buttons    ---------------------------   -->
+            <div class="row">
+                 <div class="col-6">
+                     <button type="button" class="btn btn-secondary" id="SaveBtn" >Сохранить</button>
+                     <input class="file-upload" type="file" accept="image/*"/>
+                 </div>
+                 <div class="col-6">
+                     <a  href="#" class="btn btn-secondary" id="ResetBtn" >Сбросить</a>
+                     <input class="file-upload" type="file" accept="image/*"/>
+                 </div>
+             </div>
+            </div>      
+         </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+
+  
+
+    
+<!-------------------------------------------------sCRIPTI--------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/main.js"></script>
+<!-------------------------------------------------uPLOAD Photo---------------------------------------->
+
+<script>
+	
+	$(document).ready(function() {
+
+    
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#profile-pic').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+
+//    $(".file-upload").on('change', function(){
+//
+//    });
+    
+    $("#Put_Photo").on('click', function() {
+       $("#putphoto").click();
+        readURL(this);
+    });
+});
+
+</script>
+    
+<!-------------------------------------------------Take Photo---------------------------------------->
+
+<script>
+	
+	(function () {
+		var video = document.getElementById('video'),
+		canvas = document.getElementById('canvas'),
+		context = canvas.getContext('2d'),
+		photo = document.getElementById('profile-pic'),
+			vendorUrl=window.URL || window.webkitURL;
+        var width = photo.width;
+
+		navigator.getMedia = navigator.getUserMedia ||
+							 navigator.webkitGetUserMedia ||
+							 navigator.mozGetUserMedia ||
+							 navigator.msGetUserMedia;
+
+
+			navigator.getMedia({
+				video:true,
+				audio:false
+			}, function(stream) {
+				video.srcObject=stream;
+				video.play();
+			}, function(error) {
+   				    
+			});
+
+			document.getElementById("TakePhoto").addEventListener("click",function(){
+
+                context.drawImage(video, 10, -20, 300, 300);
+                video.style.display="none";
+				photo.setAttribute('src', canvas.toDataURL('/images') ) ;
+
+
+			 }) ;
+			
+
+	})();
+
+
+</script>		
+
+	
+</body>
+</html>

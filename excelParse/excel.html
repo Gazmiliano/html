@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<title>Upload Excel</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/jszip.js"></script>
+<script src="js/xlsx.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<body>
+
+<input type="file" id="excel_file">
+<input type="button" onclick="excelParse();" value="Parse Excel">
+<pre id="log"></pre>
+
+<script type="">
+    var results = [];
+
+    var ExcelToJSON = function() {
+
+        this.parseExcel = function(file) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+
+                workbook.SheetNames.forEach(function(sheetName) {
+
+                    if (
+                        sheetName === 'Общий' ||
+                        sheetName === 'Организация'
+                    ) { return; }
+
+                    results = [];
+
+                    // Here is your object
+                    var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    var excel_obj = JSON.parse(JSON.stringify(XL_row_object));
+
+                    for (var i=0, iMax = excel_obj.length; i < iMax; i++) {
+                        results.push
+                        ({                            
+                            last_name : excel_obj[i]["Фамилия"],
+                            first_name : excel_obj[i]["Имя"],
+                            middle_name : excel_obj[i]["Отчество"]                            
+                        });
+                    }
+                    send_json(sheetName);
+                })
+            };
+
+            reader.onerror = function(ex) {
+                console.log(ex);
+            };
+
+            reader.readAsBinaryString(file);
+        };
+    };
+
+    var EXCEL_PARSER = new ExcelToJSON();
+
+    function excelParse() {
+
+        var fileList = document.getElementById("excel_file").files;
+
+        if (fileList.length > 0) {
+            EXCEL_PARSER.parseExcel(fileList[0]);
+        }
+    } 
+
+</script>
+</body>
+</html>
